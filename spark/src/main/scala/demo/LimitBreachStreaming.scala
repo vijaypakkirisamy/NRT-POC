@@ -14,7 +14,7 @@ object LimitBreachStreaming {
   // [START extract]
   private[demo] def extractBreachTags(input: RDD[String]): RDD[Popularity] =
     input.flatMap( r => r.split(" "))
-            .map(x => Popularity(x.toInt, x(1).toString, x(2).toString, x(3).toInt))
+            .map(x => Popularity(x(0).toInt, x(1).toString, x(2).toString, x(3).toInt))
             .filter(y => y.Trn_amt > 550000)
 
  /* input.flatMap(_.split("\\s+")) // Split on any white character

@@ -27,20 +27,17 @@
       <file leaf-file-name="LimitBreach.scala" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/demo/LimitBreach.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="646">
-              <caret line="38" column="20" selection-start-line="38" selection-start-column="20" selection-end-line="38" selection-end-column="20" />
-              <folding>
-                <element signature="e#16#56#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="187">
+              <caret line="11" column="49" lean-forward="true" selection-start-line="11" selection-start-column="49" selection-end-line="11" selection-end-column="49" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LimitBreachStreaming.scala" pinned="false" current-in-tab="false">
+      <file leaf-file-name="LimitBreachStreaming.scala" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/scala/demo/LimitBreachStreaming.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="18" selection-start-line="18" selection-end-line="18" />
+            <state relative-caret-position="323">
+              <caret line="19" column="66" lean-forward="true" selection-start-line="19" selection-start-column="66" selection-end-line="19" selection-end-column="66" />
               <folding>
                 <element signature="e#16#70#0" expanded="true" />
               </folding>
@@ -66,7 +63,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-204">
@@ -100,11 +97,11 @@
         <option value="$PROJECT_DIR$/src/main/scala/demo/TrendingHashtags.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/demo/package.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/demo/LoadtoES.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/demo/LimitBreachStreaming.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/demo/DataStoreConverter.scala" />
         <option value="$PROJECT_DIR$/src/test/scala/demo/HashTagsStreamingSpec.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/demo/LimitBreach.scala" />
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/src/main/scala/demo/LimitBreachStreaming.scala" />
       </list>
     </option>
   </component>
@@ -324,9 +321,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="459">
           <caret line="36" column="28" selection-start-line="36" selection-start-column="9" selection-end-line="36" selection-end-column="28" />
-          <folding>
-            <element signature="e#16#56#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -357,9 +351,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
           <caret line="20" selection-start-line="20" selection-end-line="20" />
-          <folding>
-            <element signature="e#16#56#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -398,16 +389,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/demo/LimitBreachStreaming.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" selection-start-line="18" selection-end-line="18" />
-          <folding>
-            <element signature="e#16#70#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/spark-streaming-limitbreach-demo.iml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
@@ -422,20 +403,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/demo/LimitBreach.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="646">
-          <caret line="38" column="20" selection-start-line="38" selection-start-column="20" selection-end-line="38" selection-end-column="20" />
-          <folding>
-            <element signature="e#16#56#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-204">
           <caret line="33" column="17" lean-forward="true" selection-start-line="33" selection-start-column="17" selection-end-line="33" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/demo/LimitBreach.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="49" lean-forward="true" selection-start-line="11" selection-start-column="49" selection-end-line="11" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/demo/LimitBreachStreaming.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" column="66" lean-forward="true" selection-start-line="19" selection-start-column="66" selection-end-line="19" selection-end-column="66" />
+          <folding>
+            <element signature="e#16#70#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
