@@ -6,12 +6,18 @@ import java.nio.charset.StandardCharsets
 
 import com.google.cloud.datastore._
 import demo.DataStoreConverter.saveRDDtoDataStore
-import demo.LimitBreachStreaming.processBreachTags
+import demo.LimitBreachStreaming.{Popularity, processBreachTags}
 import org.apache.spark.SparkConf
 import org.apache.spark.storage.StorageLevel
 import org.apache.spark.streaming.dstream.DStream
 import org.apache.spark.streaming.pubsub.{PubsubUtils, SparkGCPCredentials}
 import org.apache.spark.streaming.{Seconds, StreamingContext}
+import org.apache.spark.{SparkConf, SparkContext}
+import org.apache.spark.SparkContext._
+import org.apache.spark.streaming.StreamingContext
+import org.apache.spark.streaming.StreamingContext._
+import org.elasticsearch.spark.streaming._
+
 
 
 object LimitBreach {
@@ -47,9 +53,9 @@ object LimitBreach {
       //decoupled handler that saves each separate result for processed to datastore
       saveRDDtoDataStore(_, windowLength.toInt)
     )
-    
 	ssc
   }
+
 
   def main(args: Array[String]): Unit = {
     if (args.length != 5) {
@@ -70,8 +76,7 @@ object LimitBreach {
     val Seq(projectID, windowLength, slidingInterval, totalRunningTime, checkpointDirectory) = args.toSeq
 
     // Create Spark context
-    val ssc = StreamingContext.getOrCreate(checkpointDirectory,
-      () => createContext(projectID, windowLength, slidingInterval, checkpointDirectory))
+    val ssc = StreamingContext.getOrCreate(checkpointDirectory, () => createContext(projectID, windowLength, slidingInterval, checkpointDirectory))
 
     // Start streaming until we receive an explicit termination
     ssc.start()
