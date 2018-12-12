@@ -25,5 +25,7 @@ def Spark2Es (tags: Array[Popularity], windowLength: Int) {
   val microbatches = scala.collection.mutable.Queue(rdd)
    val dstream = ssc.queueStream(microbatches)
    EsSparkStreaming.saveToEs(dstream, "breach")
+    println("Data Pumped to ElasticSearch Cluster.. Please check..")
+
 }
 }
