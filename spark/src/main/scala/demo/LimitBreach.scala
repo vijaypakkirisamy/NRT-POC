@@ -6,8 +6,8 @@ import java.nio.charset.StandardCharsets
 
 import com.google.cloud.datastore._
 import demo.DataStoreConverter.saveRDDtoDataStore
+import demo.LoadtoESCloud.Spark2Es
 import demo.LimitBreachStreaming.{Popularity, processBreachTags}
-import org.apache.spark.SparkConf
 import org.apache.spark.storage.StorageLevel
 import org.apache.spark.streaming.dstream.DStream
 import org.apache.spark.streaming.pubsub.{PubsubUtils, SparkGCPCredentials}
@@ -53,6 +53,15 @@ object LimitBreach {
       //decoupled handler that saves each separate result for processed to datastore
       saveRDDtoDataStore(_, windowLength.toInt)
     )
+
+    processBreachTags(messagesStream,
+      windowLength.toInt,
+      slidingInterval.toInt,
+      10,
+      //decoupled handler that saves each separate result for processed to datastore
+      Spark2Es(_, windowLength.toInt)
+    )
+
 	ssc
   }
 
