@@ -27,7 +27,9 @@ object LimitBreach {
       .set(ConfigurationOptions.ES_INDEX_AUTO_CREATE, "true")
       .set(ConfigurationOptions.ES_NET_HTTP_AUTH_USER, "elastic")
       .set(ConfigurationOptions.ES_NET_HTTP_AUTH_PASS, "Fiw8g63BzNEOeaWYj8ESNY5d")
-
+      .set(ConfigurationOptions.ES_NODES_WAN_ONLY, "true")
+      .set(ConfigurationOptions.ES_NODES_INGEST_ONLY, "true")
+      .set(ConfigurationOptions.ES_NODES_DATA_ONLY, "true")
 
     val sc = new SparkContext(sparkConf)
     val ssc = new StreamingContext(sc, Seconds(slidingInterval.toInt))
@@ -48,14 +50,14 @@ object LimitBreach {
       .map(message => new String(message.getData(), StandardCharsets.UTF_8))
     // [END stream_setup]
 
-    //process the stream
-    processBreachTags(messagesStream,
-      windowLength.toInt,
-      slidingInterval.toInt,
-      10,
-      //decoupled handler that saves each separate result for processed to datastore
-      saveRDDtoDataStore(_, windowLength.toInt)
-    )
+//process the stream
+//    processBreachTags(messagesStream,
+//      windowLength.toInt,
+//      slidingInterval.toInt,
+//      10,
+//      //decoupled handler that saves each separate result for processed to datastore
+//      saveRDDtoDataStore(_, windowLength.toInt)
+//    )
 
     processBreachTags(messagesStream,
       windowLength.toInt,
