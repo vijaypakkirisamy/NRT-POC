@@ -4,19 +4,15 @@ package demo
 
 import java.nio.charset.StandardCharsets
 
-import com.google.cloud.datastore._
 import demo.DataStoreConverter.saveRDDtoDataStore
+import demo.LimitBreachStreaming.processBreachTags
 import demo.LoadtoESCloud.Spark2Es
-import demo.LimitBreachStreaming.{Popularity, processBreachTags}
 import org.apache.spark.storage.StorageLevel
+import org.apache.spark.streaming.{Seconds, StreamingContext}
 import org.apache.spark.streaming.dstream.DStream
 import org.apache.spark.streaming.pubsub.{PubsubUtils, SparkGCPCredentials}
-import org.apache.spark.streaming.{Seconds, StreamingContext}
 import org.apache.spark.{SparkConf, SparkContext}
-import org.apache.spark.SparkContext._
-import org.apache.spark.streaming.StreamingContext
-import org.apache.spark.streaming.StreamingContext._
-import org.elasticsearch.spark.streaming._
+import org.elasticsearch.hadoop.cfg.ConfigurationOptions
 
 
 
@@ -26,8 +22,15 @@ object LimitBreach {
     : StreamingContext = {
 
     // [START stream_setup]
-    val sparkConf = new SparkConf().setAppName("LimitBreachtags")
-    val ssc = new StreamingContext(sparkConf, Seconds(slidingInterval.toInt))
+    val sparkConf = new SparkConf().setAppName("LimitBreachtags").set(ConfigurationOptions.ES_NODES, "https://c4b88b17a3194a64b9e04a70b8613e5b.us-central1.gcp.cloud.es.io")
+      .set(ConfigurationOptions.ES_PORT, "443")
+      .set(ConfigurationOptions.ES_INDEX_AUTO_CREATE, "true")
+      .set(ConfigurationOptions.ES_NET_HTTP_AUTH_USER, "elastic")
+      .set(ConfigurationOptions.ES_NET_HTTP_AUTH_PASS, "Fiw8g63BzNEOeaWYj8ESNY5d")
+
+
+    val sc = new SparkContext(sparkConf)
+    val ssc = new StreamingContext(sc, Seconds(slidingInterval.toInt))
 
     // Set the checkpoint directory
     val yarnTags = sparkConf.get("spark.yarn.tags")
@@ -59,8 +62,8 @@ object LimitBreach {
       slidingInterval.toInt,
       10,
       //decoupled handler that saves each separate result for processed to datastore
-      Spark2Es(_, windowLength.toInt)
-    )
+      Spark2Es(_, sc, ssc)
+      )
 
 	ssc
   }

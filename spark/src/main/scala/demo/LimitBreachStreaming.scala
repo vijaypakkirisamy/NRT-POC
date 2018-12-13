@@ -2,7 +2,6 @@
 
 package demo
 
-import com.fasterxml.jackson.module.scala.util.Strings
 import org.apache.spark.rdd.RDD
 import org.apache.spark.streaming.Seconds
 import org.apache.spark.streaming.dstream.DStream
