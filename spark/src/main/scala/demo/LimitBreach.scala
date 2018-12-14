@@ -5,21 +5,25 @@ package demo
 import java.nio.charset.StandardCharsets
 
 import demo.DataStoreConverter.saveRDDtoDataStore
-import demo.LimitBreachStreaming.processBreachTags
+import demo.LimitBreachStreaming.{Popularity, processBreachTags}
 import demo.LoadtoESCloud.Spark2Es
+import org.apache.spark.rdd.RDD
 import org.apache.spark.storage.StorageLevel
 import org.apache.spark.streaming.{Seconds, StreamingContext}
 import org.apache.spark.streaming.dstream.DStream
 import org.apache.spark.streaming.pubsub.{PubsubUtils, SparkGCPCredentials}
 import org.apache.spark.{SparkConf, SparkContext}
 import org.elasticsearch.hadoop.cfg.ConfigurationOptions
+import org.elasticsearch.spark.streaming.EsSparkStreaming
+
+import scala.collection.Seq
 
 
 
 object LimitBreach {
 
   def createContext(projectID: String, windowLength: String, slidingInterval: String, checkpointDirectory: String)
-    : StreamingContext = {
+  : StreamingContext = {
 
     // [START stream_setup]
     val sparkConf = new SparkConf().setAppName("LimitBreachtags").set(ConfigurationOptions.ES_NODES, "https://c4b88b17a3194a64b9e04a70b8613e5b.us-central1.gcp.cloud.es.io")
@@ -39,7 +43,7 @@ object LimitBreach {
     val yarnTags = sparkConf.get("spark.yarn.tags")
     val jobId = yarnTags.split(",").filter(_.startsWith("dataproc_job")).head
     ssc.checkpoint(checkpointDirectory + '/' + jobId)
-    
+
     // Create stream
     val messagesStream: DStream[String] = PubsubUtils
       .createStream(
@@ -51,25 +55,38 @@ object LimitBreach {
       .map(message => new String(message.getData(), StandardCharsets.UTF_8))
     // [END stream_setup]
 
-//process the stream
-//    processBreachTags(messagesStream,
-//      windowLength.toInt,
-//      slidingInterval.toInt,
-//      10,
-//      //decoupled handler that saves each separate result for processed to datastore
-//      saveRDDtoDataStore(_, windowLength.toInt)
-//    )
+    //process the stream
+    //    processBreachTags(messagesStream,
+    //      windowLength.toInt,
+    //      slidingInterval.toInt,
+    //      10,
+    //      //decoupled handler that saves each separate result for processed to datastore
+    //      saveRDDtoDataStore(_, windowLength.toInt)
+    //    )
 
-    processBreachTags(messagesStream,
-      windowLength.toInt,
-      slidingInterval.toInt,
-      10,
-      //decoupled handler that saves each separate result for processed to datastore
-      Spark2Es(_, sc, ssc)
-      )
+    //    processBreachTags(messagesStream,
+    //      windowLength.toInt,
+    //      slidingInterval.toInt,
+    //      10,
+    //      //decoupled handler that saves each separate result for processed to datastore
+    //      Spark2Es(_, sc, ssc)
+    //      )
 
-	ssc
-  }
+    val mstream: DStream[Popularity] = messagesStream.map(x => x.split(" "))
+      .map(x => Popularity(x(0).toInt, x(1).toString, x(2).toString, x(3).toInt))
+      .filter(y => y.Trn_amt > 550000)
+
+    println("Stage 2")
+
+    val rdd = sc.makeRDD(Seq(mstream))
+    val microbatches = scala.collection.mutable.Queue(rdd)
+    val dstream = ssc.queueStream(microbatches)
+    EsSparkStreaming.saveToEs(dstream, "breaches/trandtls")
+    println("Data Pumped to ElasticSearch Cluster.. Please check..")
+
+    ssc
+
+}
 
 
   def main(args: Array[String]): Unit = {
@@ -90,8 +107,10 @@ object LimitBreach {
 
     val Seq(projectID, windowLength, slidingInterval, totalRunningTime, checkpointDirectory) = args.toSeq
 
+    println("Stage 1")
     // Create Spark context
     val ssc = StreamingContext.getOrCreate(checkpointDirectory, () => createContext(projectID, windowLength, slidingInterval, checkpointDirectory))
+
 
     // Start streaming until we receive an explicit termination
     ssc.start()
