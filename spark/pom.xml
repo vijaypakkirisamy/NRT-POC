@@ -42,20 +42,20 @@
     <dependency>
       <groupId>org.elasticsearch</groupId>
       <artifactId>elasticsearch-hadoop</artifactId>
-      <version>5.4.0</version>
+      <version>6.2.1</version>
     </dependency>
 
-    <dependency>
+    <!--dependency>
       <groupId>org.elasticsearch</groupId>
       <artifactId>elasticsearch-spark-20_2.11</artifactId>
       <version>5.4.0</version>
     </dependency>
-
+.
     <dependency>
       <groupId>org.apache.spark</groupId>
       <artifactId>spark-core_2.11</artifactId>
       <version>2.2.0</version>
-    </dependency>
+    </dependency-->
 
 
       <dependency>
