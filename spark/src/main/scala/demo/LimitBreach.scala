@@ -51,13 +51,13 @@ object LimitBreach {
     // [END stream_setup]
 
 //process the stream
-//    processBreachTags(messagesStream,
-//      windowLength.toInt,
-//      slidingInterval.toInt,
-//      10,
-//      //decoupled handler that saves each separate result for processed to datastore
-//      saveRDDtoDataStore(_, windowLength.toInt)
-//    )
+    processBreachTags(messagesStream,
+      windowLength.toInt,
+      slidingInterval.toInt,
+      10,
+      //decoupled handler that saves each separate result for processed to datastore
+      saveRDDtoDataStore(_, windowLength.toInt)
+    )
 
     processBreachTags(messagesStream,
       windowLength.toInt,

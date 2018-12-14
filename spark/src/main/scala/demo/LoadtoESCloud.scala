@@ -13,8 +13,7 @@ def Spark2Es (tags: Array[Popularity], sc: SparkContext, ssc: StreamingContext) 
   val rdd = sc.makeRDD(Seq(tags))
   val microbatches = scala.collection.mutable.Queue(rdd)
    val dstream = ssc.queueStream(microbatches)
-   EsSparkStreaming.saveToEs(dstream, "breach")
+   EsSparkStreaming.saveToEs(dstream, "breaches/trandtls")
     println("Data Pumped to ElasticSearch Cluster.. Please check..")
-
-}
+  }
 }
