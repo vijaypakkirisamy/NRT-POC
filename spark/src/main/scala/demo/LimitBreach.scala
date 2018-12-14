@@ -31,6 +31,7 @@ object LimitBreach {
       .set(ConfigurationOptions.ES_NODES_INGEST_ONLY, "true")
       .set(ConfigurationOptions.ES_NODES_DATA_ONLY, "true")
 
+
     val sc = new SparkContext(sparkConf)
     val ssc = new StreamingContext(sc, Seconds(slidingInterval.toInt))
 
@@ -51,13 +52,13 @@ object LimitBreach {
     // [END stream_setup]
 
 //process the stream
-    processBreachTags(messagesStream,
-      windowLength.toInt,
-      slidingInterval.toInt,
-      10,
-      //decoupled handler that saves each separate result for processed to datastore
-      saveRDDtoDataStore(_, windowLength.toInt)
-    )
+//    processBreachTags(messagesStream,
+//      windowLength.toInt,
+//      slidingInterval.toInt,
+//      10,
+//      //decoupled handler that saves each separate result for processed to datastore
+//      saveRDDtoDataStore(_, windowLength.toInt)
+//    )
 
     processBreachTags(messagesStream,
       windowLength.toInt,
