@@ -43,7 +43,7 @@ object LimitBreach {
     // Set the checkpoint directory
     val yarnTags = sparkConf.get("spark.yarn.tags")
     val jobId = yarnTags.split(",").filter(_.startsWith("dataproc_job")).head
-    ssc.checkpoint(checkpointDirectory + '/' + jobId)
+   // ssc.checkpoint(checkpointDirectory + '/' + jobId)
 
     // Create stream
     val messagesStream: DStream[String] = PubsubUtils
