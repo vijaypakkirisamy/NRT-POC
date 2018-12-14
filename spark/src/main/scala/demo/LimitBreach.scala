@@ -55,6 +55,8 @@ object LimitBreach {
       .map(message => new String(message.getData(), StandardCharsets.UTF_8))
     // [END stream_setup]
 
+    println("Stage 2 is :" + messagesStream)
+
     //process the stream
     //    processBreachTags(messagesStream,
     //      windowLength.toInt,
@@ -76,13 +78,13 @@ object LimitBreach {
       .map(x => Popularity(x(0).toInt, x(1).toString, x(2).toString, x(3).toInt))
       .filter(y => y.Trn_amt > 550000)
 
-    println("Stage 2")
+    println("Stage 3 is :" + mstream)
 
     val rdd = sc.makeRDD(Seq(mstream))
     val microbatches = scala.collection.mutable.Queue(rdd)
     val dstream = ssc.queueStream(microbatches)
     EsSparkStreaming.saveToEs(dstream, "breaches/trandtls")
-    println("Data Pumped to ElasticSearch Cluster.. Please check..")
+    println("Stage 4 is Data Pumped to ElasticSearch Cluster.. Please check..")
 
     ssc
 
@@ -111,7 +113,7 @@ object LimitBreach {
     // Create Spark context
     val ssc = StreamingContext.getOrCreate(checkpointDirectory, () => createContext(projectID, windowLength, slidingInterval, checkpointDirectory))
 
-
+    println("Stage 6")
     // Start streaming until we receive an explicit termination
     ssc.start()
 
