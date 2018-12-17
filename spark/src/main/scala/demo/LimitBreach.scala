@@ -27,7 +27,7 @@ object LimitBreach {
   : StreamingContext = {
 
     // [START stream_setup]
-    val sparkConf = new SparkConf().setAppName("LimitBreachtags").set(ConfigurationOptions.ES_NODES, "https://c4b88b17a3194a64b9e04a70b8613e5b.us-central1.gcp.cloud.es.io")
+    val sparkConf = new SparkConf().setAppName("LimitBreachtags").set(ConfigurationOptions.ES_NODES, "c4b88b17a3194a64b9e04a70b8613e5b.us-central1.gcp.cloud.es.io")
       .set(ConfigurationOptions.ES_PORT, "443")
       .set(ConfigurationOptions.ES_INDEX_AUTO_CREATE, "true")
       .set(ConfigurationOptions.ES_NET_HTTP_AUTH_USER, "elastic")
@@ -43,7 +43,7 @@ object LimitBreach {
     // Set the checkpoint directory
     val yarnTags = sparkConf.get("spark.yarn.tags")
     val jobId = yarnTags.split(",").filter(_.startsWith("dataproc_job")).head
-   // ssc.checkpoint(checkpointDirectory + '/' + jobId)
+    ssc.checkpoint(checkpointDirectory + '/' + jobId)
 
     // Create stream
     val messagesStream: DStream[String] = PubsubUtils
@@ -56,7 +56,7 @@ object LimitBreach {
       .map(message => new String(message.getData(), StandardCharsets.UTF_8))
     // [END stream_setup]
 
-    println("Stage 2 is :" + messagesStream)
+    println("Stage 2 is :" + messagesStream.print())
 
     //process the stream
     //    processBreachTags(messagesStream,
@@ -79,7 +79,7 @@ object LimitBreach {
       .map(x => Popularity(x(0).toInt, x(1).toString, x(2).toString, x(3).toInt))
       .filter(y => y.Trn_amt > 550000)
 
-    println("Stage 3 is :" + mstream)
+    println("Stage 3 is :" + mstream.print())
 
     val rdd = sc.makeRDD(Seq(mstream))
     val microbatches = scala.collection.mutable.Queue(rdd)
