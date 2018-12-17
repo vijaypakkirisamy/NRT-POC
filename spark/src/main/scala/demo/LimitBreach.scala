@@ -32,11 +32,12 @@ object LimitBreach {
       .set(ConfigurationOptions.ES_INDEX_AUTO_CREATE, "true")
       .set(ConfigurationOptions.ES_NET_HTTP_AUTH_USER, "elastic")
       .set(ConfigurationOptions.ES_NET_HTTP_AUTH_PASS, "Fiw8g63BzNEOeaWYj8ESNY5d")
+
       //.set(ConfigurationOptions.ES_NODES_WAN_ONLY, "true")
      // .set(ConfigurationOptions.ES_NODES_INGEST_ONLY, "true")
-      .set(ConfigurationOptions.ES_NODES_DATA_ONLY, "true")
-      .set(ConfigurationOptions.ES_NODES_DISCOVERY, "true")
-      .set(ConfigurationOptions.ES_NODES_CLIENT_ONLY, "false")
+   //   .set(ConfigurationOptions.ES_NODES_DATA_ONLY, "true")
+     // .set(ConfigurationOptions.ES_NODES_DISCOVERY, "true")
+     // .set(ConfigurationOptions.ES_NODES_CLIENT_ONLY, "false")
 
 
     val sc = new SparkContext(sparkConf)
