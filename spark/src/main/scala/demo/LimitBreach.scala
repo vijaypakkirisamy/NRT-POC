@@ -27,17 +27,27 @@ object LimitBreach {
   : StreamingContext = {
 
     // [START stream_setup]
-    val sparkConf = new SparkConf().setAppName("LimitBreachtags").set(ConfigurationOptions.ES_NODES, "c4b88b17a3194a64b9e04a70b8613e5b.us-central1.gcp.cloud.es.io")
-      .set(ConfigurationOptions.ES_PORT, "9243")
-      .set(ConfigurationOptions.ES_INDEX_AUTO_CREATE, "true")
-      .set(ConfigurationOptions.ES_NET_HTTP_AUTH_USER, "elastic")
-      .set(ConfigurationOptions.ES_NET_HTTP_AUTH_PASS, "Fiw8g63BzNEOeaWYj8ESNY5d")
-      .set(ConfigurationOptions.ES_NODES_WAN_ONLY, "true")
-      .set(ConfigurationOptions.ES_NODES_INGEST_ONLY, "true")
-      .set(ConfigurationOptions.ES_NODES_DATA_ONLY, "true")
-      .set(ConfigurationOptions.ES_NODES_DISCOVERY, "true")
-      .set(ConfigurationOptions.ES_NODES_CLIENT_ONLY, "false")
+//    val sparkConf = new SparkConf().setAppName("LimitBreachtags").set(ConfigurationOptions.ES_NODES, "c4b88b17a3194a64b9e04a70b8613e5b.us-central1.gcp.cloud.es.io")
+//      .set(ConfigurationOptions.ES_PORT, "443")
+//      .set(ConfigurationOptions.ES_INDEX_AUTO_CREATE, "true")
+//      .set(ConfigurationOptions.ES_NET_HTTP_AUTH_USER, "elastic")
+//      .set(ConfigurationOptions.ES_NET_HTTP_AUTH_PASS, "Fiw8g63BzNEOeaWYj8ESNY5d")
+//      .set(ConfigurationOptions.ES_NODES_WAN_ONLY, "true")
+//     // .set(ConfigurationOptions.ES_NODES_INGEST_ONLY, "true")
+//      .set(ConfigurationOptions.ES_NODES_DATA_ONLY, "true")
+//      .set(ConfigurationOptions.ES_NODES_DISCOVERY, "true")
+//      .set(ConfigurationOptions.ES_NODES_CLIENT_ONLY, "false")
 
+
+    val sparkConf = new SparkConf()
+      .set("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
+      .set("spark.es.index.auto.create", "true")
+      .set("spark.es.nodes", "c4b88b17a3194a64b9e04a70b8613e5b.us-central1.gcp.cloud.es.io")
+      .set("spark.es.port", "443")
+      .set("spark.es.net.http.auth.user","elastic")
+      .set("spark.es.net.http.auth.pass", "Fiw8g63BzNEOeaWYj8ESNY5d")
+      .set("spark.es.resource", "breaches")
+      .set("spark.es.nodes.wan.only", "true")  // val sparkSession = SparkSession.builder().config(sparkConf).appName("sourcedashboard").getOrCreate()
 
     val sc = new SparkContext(sparkConf)
     val ssc = new StreamingContext(sc, Seconds(slidingInterval.toInt))
