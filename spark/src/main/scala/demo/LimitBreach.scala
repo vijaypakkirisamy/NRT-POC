@@ -35,6 +35,8 @@ object LimitBreach {
       .set(ConfigurationOptions.ES_NODES_WAN_ONLY, "true")
       .set(ConfigurationOptions.ES_NODES_INGEST_ONLY, "true")
       .set(ConfigurationOptions.ES_NODES_DATA_ONLY, "true")
+      .set(ConfigurationOptions.ES_NODES_DISCOVERY, "true")
+      .set(ConfigurationOptions.ES_NODES_CLIENT_ONLY, "false")
 
 
     val sc = new SparkContext(sparkConf)
